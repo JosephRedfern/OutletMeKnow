@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <!--<meta http-equiv="refresh" content="1">-->
+    <title>Stock Status</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" type="text/css" />
+</head>
+<body>
+
+
+<div>
+    {% for model in models %}
+        <div class="col-md-4" style="background-color: {{ model.get_color }} ">
+            <h1>{{ model.name }}</h1>
+            <p>
+                {{ model.get_stock_count.stock_count }}
+
+                <img src="https://chart.googleapis.com/chart?chs=200x125&cht=ls&chco=0077CC&chd=t:{{ model.get_stock_history }}" />
+            </p>
+        </div>
+    {% endfor %}
+</div>
+
+</body>
+</html>

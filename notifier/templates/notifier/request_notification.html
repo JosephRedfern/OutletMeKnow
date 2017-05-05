@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Stock Notificaton Request</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" type="text/css" />
+    <style>
+        .request-form{
+            list-style: none;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Dell Outlet Stock Notifier</h1>
+    <div>
+        <form class="request-form" action="/request/" method="post">
+            {% csrf_token %}
+            {{ form.as_ul }}
+            <input type="submit" value="Submit" />
+        </form>
+    </div>
+</div>
+</body>
+</html>
