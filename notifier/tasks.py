@@ -7,7 +7,7 @@ import re
 from datetime import datetime
 from notifier.models import OutletModel, StockHistory, NotificationRequest
 from twilio.rest import Client
-
+from .credentials import *
 @shared_task
 def check_stock():
     for om in OutletModel.objects.all():
@@ -27,7 +27,7 @@ def check_stock():
 @shared_task
 def process_notifications():
     unprocessed = NotificationRequest.objects.filter(sent__isnull=True)
-    twilio_client = Client(os.environ['TWILIO_ACCOUNT'], os.environ['TWILIO_TOKEN'])
+    twilio_client = Client(TWILIO_ACCOUNT, TWILIO_TOKEN)
 
     for nr in unprocessed:
         if nr.model.get_stock_count().stock_count > 0:
@@ -42,7 +42,7 @@ def process_notifications():
                 print("Sending Email!")
                 requests.post(
                     "https://api.mailgun.net/v3/mg.redfern.me/messages",
-                    auth=("api", os.environ['MAILGUN_KEY']),
+                    auth=("api", MAILGUN_KEY),
                     data={
                         "from": "Outlet Notifier <joseph@redfern.me>",
                         "to": "Joseph Redfern <joseph@redfern.me>",
