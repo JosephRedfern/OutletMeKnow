@@ -1,7 +1,7 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .models import OutletModel, NotificationRequest
 from .forms import NotificationRequestForm
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 
 
 def request_notification(request):
@@ -39,5 +39,21 @@ def show_all(request):
     print(context['models'])
     return render(request, 'notifier/show_all.html', context)
 
+def status(request):
+    context = {}
+    context['products'] = OutletModel.objects.order_by("name").all()
+
+    return render(request, 'notifier/status.html', context)
+
 def thanks(request):
     return render(request, 'notifier/thanks.html', {})
+
+def visit(request, uuid):
+    nr = NotificationRequest.objects.filter(uuid=uuid).first()
+    nr.visited += 1
+    nr.save()
+
+    print("NOW: {}".format(nr.visited))
+
+    # return HttpResponse("dfg")
+    return redirect(nr.model.url)

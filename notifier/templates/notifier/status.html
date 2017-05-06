@@ -1,0 +1,26 @@
+{% extends "notifier/base.html" %}
+{% block title %}<title>Stock Status</title>{% endblock %}
+{% block content %}
+    <h2>Stock Status</h2>
+    <p>
+        The below table lists tracked models, current stock, and the date at which stock was last added.
+    </p>
+    <table class="table table-sm table-striped table-hover">
+    <thead>
+        <tr>
+            <th>Product Name</th>
+            <th>Last Checked</th>
+            <th>Last Added</th>
+            <th>Stock Count</th>
+        </tr>
+    </thead>
+    {% for product in products %}
+        <tr>
+            <td><a href="{{ product.url }}">{{ product.name }}</a></td>
+        <td>{{ product.get_stock_count.timestamp }}</td>
+        <td>{{ product.last_added.timestamp }}</td>
+        <td>{{ product.get_stock_count.stock_count }}</td>
+        </tr>
+    {% endfor %}
+    </table>
+{% endblock %}

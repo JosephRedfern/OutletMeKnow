@@ -14,15 +14,18 @@ Including another URLconf
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
 from django.conf.urls import url, include
-from django.conf import settings
+from django.views.generic import TemplateView
 from django.contrib import admin
 import notifier.views
 import debug_toolbar
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^request/', notifier.views.request_notification),
+    url(r'^status/', notifier.views.status),
+    url(r'^show_all/', notifier.views.show_all),
+    url(r'^about/', TemplateView.as_view(template_name='notifier/about.html')),
     url(r'^thanks/', notifier.views.thanks),
-    url(r'^$', notifier.views.show_all),
+    url(r'^notification/(?P<uuid>[0-9a-f-]+)', notifier.views.visit),
+    url(r'^$', notifier.views.request_notification),
     url(r'^__debug__/', include(debug_toolbar.urls)),
 ]

@@ -1,0 +1,12 @@
+{% extends "notifier/base.html" %}
+{% block title %} <title> About Dell Outlet Stock Notifier </title>{% endblock %}
+{% block content %}
+    <h1>About</h1>
+<p>Having tried to buy products from the Dell Outlet with some dificulty in the past, I wrote a small script that would check the stock status of the laptop I wanted, allowing me to avoid manually refreshing the page to check stock levels throughout the day</p>
+
+<p>This script worked well, and there didn't seem to be any other tools online that offered this service - so OutletMeKnow was born!</p>
+
+<p>The service is written in Python, using Django, Celery and Postgresql as a database server.</p>
+
+<p>I wrote most of this thing on a saturday night after drinking a glass or two of wine, so the code leaves a little to be desired. It's all open source, so if you'd like to contribute then <a href="https://github.com/josephredfern/OutletMeKnow">check it out on GitHub</a>.</p>
+{% endblock %}

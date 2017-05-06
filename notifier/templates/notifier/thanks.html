@@ -1,23 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Thank you!</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" type="text/css" />
-    <style>
-        .request-form{
-            list-style: none;
-        }
-    </style>
-</head>
-<body>
-<div class="container">
-    <h1>Dell Outlet Stock Notifier</h1>
-    <div>
-       <p>
-           Request Received! You will receive a text message and/or email when the requested product comes in stock.
-       </p>
-    </div>
+{% extends "notifier/base.html" %}
+{% block title %}<title>Thanks for registering.</title>{% endblock %}
+{% block content %}
+<h1>Dell Outlet Stock Notifier</h1>
+<div>
+   <p>
+       Request Received! You will receive a text message and/or email when the requested product comes in stock.
+   </p>
 </div>
-</body>
-</html>
+{% endblock %}

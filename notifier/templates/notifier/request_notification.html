@@ -1,25 +1,30 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Stock Notificaton Request</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" type="text/css" />
+{% extends "notifier/base.html" %}
+{% block title %}<title>Stock Notificaton Request</title> {% endblock %}
+{% block custom_head %}
     <style>
         .request-form{
             list-style: none;
         }
     </style>
-</head>
-<body>
-<div class="container">
+{% endblock %}
+{% block content %}
     <h1>Dell Outlet Stock Notifier</h1>
+    <p>
+        This service will notify you when your chosen model of Dell laptop comes in stock on the <a href="http://www.dell.com/learn/uk/en/ukdfh1/campaigns/splitter">Dell Outlet website</a>.
+    </p>
+    <p>
+        For an overview of current stock, please visit the <a href="/status">stock status page</a>.
+    </p>
+    <p>
+        Please note that for the time being, <b>this service only works on the UK Dell Outlet</b>. Given demand, I would gladly add support for other countries. 
+    </p>
     <div>
-        <form class="request-form" action="/request/" method="post">
+        <form class="request-form" action="/" method="post">
             {% csrf_token %}
-            {{ form.as_ul }}
+            <table>
+                {{ form.as_table }}
+            </table>
             <input type="submit" value="Submit" />
         </form>
     </div>
-</div>
-</body>
-</html>
+{% endblock %}

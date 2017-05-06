@@ -33,7 +33,6 @@ def process_notifications():
         if nr.model.get_stock_count().stock_count > 0:
             model_count = nr.model.get_stock_count().stock_count
             model_name = nr.model.name
-            model_url = nr.model.url
 
             nr.sent = datetime.now()
             nr.save()
@@ -46,11 +45,11 @@ def process_notifications():
                     data={
                         "from": "Outlet Notifier <joseph@redfern.me>",
                         "to": "Joseph Redfern <joseph@redfern.me>",
-                        "subject": "{} stock update".format(model_name),
-                        "text": "There {} now {} {}'s in stock. URL Here: {}".format("are" if model_count > 1 else "is", model_count, model_name, model_url)})
+                        "subject": "OutletMeKnow: {} stock update".format(model_name),
+                        "text": "There {} now {} {}'s in stock. Buy at: http://outletmeknow.redfern.me/notification/{}".format("are" if model_count > 1 else "is", model_count, model_name, nr.uuid)})
 
             if nr.mobile_number is not None:
-                msg = "WE HAVE {} {}'s IN STOCK".format(model_count, model_name)
+                msg = "There are now {} {}'s in stock. Buy at: http://outletmeknow.redfern.me/notification/{}".format(model_count, model_name, nr.uuid)
                 print("Sending message: {}".format(msg))
                 twilio_client.messages.create(to=nr.mobile_number, from_="+442825022666", body=msg)
 
