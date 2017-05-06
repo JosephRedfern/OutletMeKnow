@@ -44,11 +44,11 @@ def process_notifications():
                     auth=("api", MAILGUN_KEY),
                     data={
                         "from": "Outlet Notifier <joseph@redfern.me>",
-                        "to": "Joseph Redfern <joseph@redfern.me>",
+                        "to": "{} <{}>".format(nr.email, nr.email),
                         "subject": "OutletMeKnow: {} stock update".format(model_name),
                         "text": "There {} now {} {}'s in stock. Buy at: http://outletmeknow.redfern.me/notification/{}".format("are" if model_count > 1 else "is", model_count, model_name, nr.uuid)})
 
-            if nr.mobile_number is not None:
+            if nr.mobile_number is not None and len(nr.mobile_number) > 10:
                 msg = "There are now {} {}'s in stock. Buy at: http://outletmeknow.redfern.me/notification/{}".format(model_count, model_name, nr.uuid)
                 print("Sending message: {}".format(msg))
                 twilio_client.messages.create(to=nr.mobile_number, from_="+442825022666", body=msg)
