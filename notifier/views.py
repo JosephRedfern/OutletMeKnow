@@ -41,7 +41,7 @@ def show_all(request):
 
 def status(request):
     context = {}
-    context['products'] = OutletModel.objects.order_by("name").all()
+    context['products'] = sorted(OutletModel.objects.all(), key=lambda x: x.last_added().timestamp)[::-1]
 
     return render(request, 'notifier/status.html', context)
 
