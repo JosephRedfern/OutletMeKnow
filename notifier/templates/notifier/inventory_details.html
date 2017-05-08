@@ -13,14 +13,14 @@
         type: 'line',
         data: {
             labels: [
-                        {% for h in model.get_history %}
-                        moment("{{ h.timestamp | date:"Y-m-d H:m:s" }}"){% if not forloop.last %}, {% endif %}{% endfor %}
+                        {% for h in model.get_hourly_history %}
+                        moment("{{ h.hour | date:"Y-m-d H:m:s" }}"){% if not forloop.last %}, {% endif %}{% endfor %}
             ],
             datasets: [{
                 label: "{{ model.name }}",
                 fill: false,
-                data: [ {% for h in model.get_history %}
-                    {{ h.stock_count }}{% if not forloop.last %}, {% endif %}{% endfor %}
+                data: [ {% for h in model.get_hourly_history %}
+                    {{ h.a }}{% if not forloop.last %}, {% endif %}{% endfor %}
                 ]
             }]
         },

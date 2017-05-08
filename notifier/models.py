@@ -1,5 +1,8 @@
 from django.db import models
 import uuid
+from django.db.models.functions import TruncHour
+from django.db.models import Avg
+from datetime import datetime, timedelta
 
 # Create your models here.
 
@@ -15,8 +18,8 @@ class OutletModel(models.Model):
     def get_stock_history(self):
         return ",".join([str(x.stock_count) for x in self.stockhistory_set.order_by('-timestamp')[0:100]])
 
-    def get_history(self):
-        return self.stockhistory_set.order_by('-timestamp')[0:250]
+    def get_hourly_history(self):
+        return StockHistory.objects.filter(timestamp__gte=datetime.now()-timedelta(days=7)).annotate(hour=TruncHour('timestamp')).values('hour').annotate(a=Avg('stock_count'))
 
     def last_added(self):
         try:
