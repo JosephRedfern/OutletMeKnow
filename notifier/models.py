@@ -13,10 +13,10 @@ class OutletModel(models.Model):
 
     #TODO: optimise this -- so many queries being issued due to ORM.
     def get_stock_history(self):
-        return ",".join([str(x.stock_count) for x in self.stockhistory_set.order_by('timestamp')[0:100]])
+        return ",".join([str(x.stock_count) for x in self.stockhistory_set.order_by('-timestamp')[0:100]])
 
     def get_history(self):
-        return self.stockhistory_set.order_by('timestamp')[0:250]
+        return self.stockhistory_set.order_by('-timestamp')[0:250]
 
     def last_added(self):
         try:
