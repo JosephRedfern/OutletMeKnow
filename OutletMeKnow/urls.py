@@ -24,6 +24,7 @@ urlpatterns = [
     url(r'^status/', notifier.views.status),
     url(r'^show_all/', notifier.views.show_all),
     url(r'^about/', TemplateView.as_view(template_name='notifier/about.html')),
+    url(r'^inventory/(?P<mid>[0-9]+)', notifier.views.inventory_details),
     url(r'^thanks/', notifier.views.thanks),
     url(r'^notification/(?P<uuid>[0-9a-f-]+)', notifier.views.visit),
     url(r'^$', notifier.views.request_notification),

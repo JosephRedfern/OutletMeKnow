@@ -1,0 +1,59 @@
+{% extends "notifier/base.html" %}
+{% block title %} <title> Inventory Details: {{ model.name }} </title>{% endblock %}
+{% block custom_head %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.js" integrity="sha256-GSRe5cHmmTD3DgBxRifzkNLaW1iwPTzt9kJ86rGa8tg=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.js" integrity="sha256-thgNwq1kqppxWOZpF2V/KfgGpLeBWbLMg704XfwYUDQ=" crossorigin="anonymous"></script>    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js" integrity="sha256-1hjUhpc44NwiNg8OwMu2QzJXhD8kcj+sJA3aCQZoUjg=" crossorigin="anonymous"></script>
+
+{% endblock %}
+{% block content %}
+    <h1>{{ model.name }}</h1>
+    <canvas id="sc"></canvas>
+    <script>
+    var config = {
+        type: 'line',
+        data: {
+            labels: [
+                        {% for h in model.get_history %}
+                        moment("{{ h.timestamp | date:"Y-m-d H:m:s" }}"){% if not forloop.last %}, {% endif %}{% endfor %}
+            ],
+            datasets: [{
+                label: "{{ model.name }}",
+                fill: false,
+                data: [ {% for h in model.get_history %}
+                    {{ h.stock_count }}{% if not forloop.last %}, {% endif %}{% endfor %}
+                ]
+            }]
+        },
+        options: {
+            title: {
+                text: "{{ model.name }} Pricing History"
+            },
+            scales: {
+					xAxes: [{
+						type: "time",
+						time: {
+							format: "YYY-MM-DD HH:mm:ss",
+							tooltipFormat: 'll HH:mm'
+						},
+						scaleLabel: {
+							display: true,
+							labelString: 'Date'
+						}
+					}, ],
+					yAxes: [{
+						scaleLabel: {
+							display: true,
+							labelString: 'Stock Count'
+						}
+					}]
+				},
+        }
+
+    };
+    window.onload = function() {
+        var ctx = document.getElementById("sc").getContext("2d");
+        window.myLine = new Chart(ctx, config);
+        window.myLine.update();
+    };
+</script>
+{% endblock %}

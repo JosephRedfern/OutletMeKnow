@@ -16,7 +16,7 @@
     </thead>
     {% for product in products %}
         <tr>
-            <td><a href="{{ product.url }}">{{ product.name }}</a></td>
+            <td><a href="/inventory/{{ product.id }}">{{ product.name }}</a></td>
         <td>{{ product.get_stock_count.timestamp }}</td>
         <td>{{ product.last_added.timestamp }}</td>
         <td>{{ product.get_stock_count.stock_count }}</td>

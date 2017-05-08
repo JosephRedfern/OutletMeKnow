@@ -15,6 +15,9 @@ class OutletModel(models.Model):
     def get_stock_history(self):
         return ",".join([str(x.stock_count) for x in self.stockhistory_set.order_by('timestamp')[0:100]])
 
+    def get_history(self):
+        return self.stockhistory_set.order_by('timestamp')[0:250]
+
     def last_added(self):
         try:
             return StockHistory.objects.raw("SELECT * FROM (SELECT *, lead(stock_count) OVER (ORDER BY timestamp DESC) sclag, stock_count - lead(stock_count) OVER (ORDER BY timestamp DESC) as diff FROM notifier_stockhistory WHERE model_id=%s) as sc WHERE diff > 0 ORDER BY timestamp ASC LIMIT 1;", [self.id])[0]

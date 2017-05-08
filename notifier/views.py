@@ -24,7 +24,6 @@ def request_notification(request):
             nr.model = model
             nr.save()
 
-
             return HttpResponseRedirect('/thanks/')
 
     # if a GET (or any other method) we'll create a blank form
@@ -33,11 +32,13 @@ def request_notification(request):
 
     return render(request, 'notifier/request_notification.html', {'form': form})
 
+
 def show_all(request):
     context = {}
     context['models'] = OutletModel.objects.all()
     print(context['models'])
     return render(request, 'notifier/show_all.html', context)
+
 
 def status(request):
     context = {}
@@ -45,8 +46,10 @@ def status(request):
 
     return render(request, 'notifier/status.html', context)
 
+
 def thanks(request):
     return render(request, 'notifier/thanks.html', {})
+
 
 def visit(request, uuid):
     nr = NotificationRequest.objects.filter(uuid=uuid).first()
@@ -57,3 +60,13 @@ def visit(request, uuid):
 
     # return HttpResponse("dfg")
     return redirect(nr.model.url)
+
+
+def inventory_details(request, mid):
+    context = {}
+    model = OutletModel.objects.filter(id=mid).first()
+
+    print(model)
+
+    context['model'] = model
+    return render(request, 'notifier/inventory_details.html', context)
