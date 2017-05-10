@@ -1,11 +1,26 @@
 {% extends "notifier/base.html" %}
 {% block title %}<title>Stock Status</title>{% endblock %}
+{% block custom_head %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.15/css/jquery.dataTables.min.css" integrity="sha256-TntJ2hIwyiYc8GIhWzIt+PvYBfQE4VfxJnn+ea5kcJs=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/datatables/1.10.15/css/dataTables.bootstrap.css" integrity="sha256-I9TOaqmifat8pWeF6SutmajUX3mfSpUgRnCjCBX2YxY=" crossorigin="anonymous" />
+    <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.10.15/js/jquery.dataTables.min.js" ></script>
+    <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.10.15/js/dataTables.bootstrap.min.js" ></script>
+
+    <script>
+    $(document).ready(function() {
+        $('#stock').DataTable({
+            "bPaginate": false
+        });
+    } );
+    </script>
+{% endblock %}
+
 {% block content %}
     <h2>Stock Status</h2>
     <p>
         The below table lists tracked models, current stock, and the date at which stock was last added.
     </p>
-    <table class="table table-sm table-striped table-hover">
+    <table id="stock" class="table table-sm table-striped table-hover">
     <thead>
         <tr>
             <th>Product Name</th>

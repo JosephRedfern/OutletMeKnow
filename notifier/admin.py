@@ -33,7 +33,7 @@ class OutletAdmin(admin.ModelAdmin):
 
 
 class NotificationRequestsAdmin(admin.ModelAdmin):
-    list_display = ('model', 'email', 'sent')
+    list_display = ('model', 'created', 'email', 'sent')
 
 admin.site.register(StockHistory)
 admin.site.register(OutletModel, OutletAdmin)

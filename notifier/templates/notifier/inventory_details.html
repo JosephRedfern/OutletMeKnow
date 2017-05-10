@@ -18,7 +18,7 @@
             ],
             datasets: [{
                 label: "{{ model.name }}",
-                fill: false,
+                fill: true<a,
                 steppedLine: true,
                 data: [ {% for h in model.get_hourly_history %}
                     {{ h.a }}{% if not forloop.last %}, {% endif %}{% endfor %}
@@ -42,6 +42,7 @@
 						}
 					}, ],
 					yAxes: [{
+					    //margin: 10,
 					    display: true,
 						ticks: {
 					      beginAtZero: true,
@@ -60,5 +61,7 @@
         window.myLine = new Chart(ctx, config);
         window.myLine.update();
     };
+
+
 </script>
 {% endblock %}
