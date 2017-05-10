@@ -18,7 +18,7 @@
             ],
             datasets: [{
                 label: "{{ model.name }}",
-                fill: true<a,
+                fill: true,
                 steppedLine: true,
                 data: [ {% for h in model.get_hourly_history %}
                     {{ h.a }}{% if not forloop.last %}, {% endif %}{% endfor %}
