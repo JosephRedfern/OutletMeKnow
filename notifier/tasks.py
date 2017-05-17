@@ -17,7 +17,6 @@ def check_stock():
 
         entry = StockHistory()
         entry.stock_count = total
-        entry.response = resp.text
         entry.model = om
         entry.save()
 

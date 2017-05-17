@@ -46,7 +46,6 @@ class OutletModel(models.Model):
 class StockHistory(models.Model):
     stock_count = models.IntegerField()
     timestamp = models.DateTimeField(auto_now_add=True)
-    response = models.TextField()
     model = models.ForeignKey('OutletModel')
 
     def __str__(self):
