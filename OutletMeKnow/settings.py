@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 """
 
 import os
+import raven
+from .private import SENTRY_DSN
 from .celery import app as celery_app
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -41,7 +43,7 @@ INSTALLED_APPS = [
     'django_celery_beat',
     'django_celery_results',
     'notifier',
-    'debug_toolbar',
+    'raven.contrib.django.raven_compat',
 ]
 
 MIDDLEWARE = [
@@ -131,3 +133,8 @@ STATIC_URL = '/static/'
 CELERY_RESULT_BACKEND = 'django-db'
 DATA_UPLOAD_MAX_NUMBER_FIELDS = 2**16
 CELERY_IMPORTS = ['notifier.tasks']
+
+RAVEN_CONFIG = {
+    'dsn': SENTRY_DSN,
+    'release': raven.fetch_git_sha(os.path.dirname(os.pardir)),
+}
