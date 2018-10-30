@@ -13,6 +13,7 @@ Including another URLconf
     1. Import the include() function: from django.conf.urls import url, include
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
+from django.urls import path
 from django.conf.urls import url, include
 from django.views.generic import TemplateView
 from django.contrib import admin
@@ -21,12 +22,12 @@ import debug_toolbar
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^status/', notifier.views.status),
-    url(r'^show_all/', notifier.views.show_all),
-    url(r'^about/', TemplateView.as_view(template_name='notifier/about.html')),
-    url(r'^inventory/(?P<mid>[0-9]+)', notifier.views.inventory_details),
-    url(r'^thanks/', notifier.views.thanks),
-    url(r'^notification/(?P<uuid>[0-9a-f-]+)', notifier.views.visit),
-    url(r'^$', notifier.views.request_notification),
+    path('status/', notifier.views.status),
+    path('show_all/', notifier.views.show_all),
+    path('about/', TemplateView.as_view(template_name='notifier/about.html')),
+    path('inventory/<int:mid>)', notifier.views.inventory_details),
+    path('thanks/', notifier.views.thanks),
+    path('notification/<str:uuid>', notifier.views.visit),
+    path('', notifier.views.request_notification),
     url(r'^__debug__/', include(debug_toolbar.urls)),
 ]
