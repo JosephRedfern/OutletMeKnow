@@ -13,9 +13,9 @@ class StockHistoryInline(admin.StackedInline):
 
 class OutletAdmin(admin.ModelAdmin):
     model = OutletModel
-    list_display = ('name', 'current_stock', 'last_checked')
-    readonly_fields = ('current_stock', 'stock_history', 'last_checked')
-    inlines = [StockHistoryInline]
+    list_display = ('name', 'last_checked') #'current_stock', 'last_checked')
+    readonly_fields = ('current_stock', 'last_checked') #'stock_history', 'last_checked')
+#    inlines = [StockHistoryInline]
 
     def history_length(self, obj):
         return obj.stockhistory_set.count()

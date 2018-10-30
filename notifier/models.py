@@ -10,13 +10,14 @@ from datetime import datetime, timedelta
 class OutletModel(models.Model):
     name = models.CharField(max_length=255)
     url = models.CharField(max_length=4096)
+    last_checked = models.DateTimeField(null=True, blank=True)
 
     def get_stock_count(self):
         return self.stockhistory_set.order_by('-timestamp').first()
 
     #TODO: optimise this -- so many queries being issued due to ORM.
     def get_stock_history(self):
-        return ",".join([str(x.stock_count) for x in self.stockhistory_set.order_by('-timestamp')[0:100]])
+        return ",".join([str(x.stock_count) for x in self.stockhistory_set.order_by('-timestamp')[:100]])
 
     def get_hourly_history(self):
         return self.stockhistory_set.filter(timestamp__gte=datetime.now()-timedelta(days=7)).annotate(hour=TruncHour('timestamp')).values('hour').annotate(a=Avg('stock_count')).order_by('hour')
