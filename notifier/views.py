@@ -15,12 +15,10 @@ def request_notification(request):
             # ...
             # redirect to a new URL:
             email = form.cleaned_data['email_address']
-            mobile = form.cleaned_data['mobile_number']
             model = form.cleaned_data['model']
 
             nr = NotificationRequest()
             nr.email = email
-            nr.mobile_number = mobile
             nr.model = model
             nr.save()
 
@@ -36,13 +34,13 @@ def request_notification(request):
 def show_all(request):
     context = {}
     context['models'] = OutletModel.objects.all()
-    print(context['models'])
     return render(request, 'notifier/show_all.html', context)
 
 
 def status(request):
     context = {}
-    context['products'] = sorted(OutletModel.objects.all(), key=lambda x: x.last_added().timestamp)[::-1]
+    models = OutletModel.objects.all().order_by('last_checked')
+    context['products'] = models
 
     return render(request, 'notifier/status.html', context)
 
@@ -64,9 +62,7 @@ def visit(request, uuid):
 
 def inventory_details(request, mid):
     context = {}
-    model = OutletModel.objects.filter(id=mid).first()
-
-    print(model)
+    model = OutletModel.objects.get(id=mid)
 
     context['model'] = model
     return render(request, 'notifier/inventory_details.html', context)

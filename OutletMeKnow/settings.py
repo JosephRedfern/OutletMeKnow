@@ -11,8 +11,8 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 """
 
 import os
-import raven
-from .private import SENTRY_DSN
+#import raven
+#from .private import SENTRY_DSN
 from .celery import app as celery_app
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -28,7 +28,7 @@ SECRET_KEY = 'mto$6w3qj1pd*a6(%(ykumqwue@1fabz1!3wfz%f4vi5iswpa_'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['51.15.227.152', 'outletmeknow.redfern.me']
 
 
 # Application definition
@@ -43,7 +43,7 @@ INSTALLED_APPS = [
     'django_celery_beat',
     'django_celery_results',
     'notifier',
-    'raven.contrib.django.raven_compat',
+#    'raven.contrib.django.raven_compat',
 ]
 
 MIDDLEWARE = [
@@ -84,10 +84,8 @@ WSGI_APPLICATION = 'OutletMeKnow.wsgi.application'
 DATABASES = {
     'default': {
 	'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'outletmeknow',
+        'NAME': 'joe',
         'USER': 'joe',
-        'HOST': '127.0.0.1',
-        'PORT': '5432',
     }
 }
 
@@ -114,7 +112,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/1.11/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'en-gb'
 
 TIME_ZONE = 'Europe/London'
 
@@ -129,12 +127,13 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
 STATIC_URL = '/static/'
+STATIC_ROOT = '/home/joe/outletmeknow/static'
 
 CELERY_RESULT_BACKEND = 'django-db'
 DATA_UPLOAD_MAX_NUMBER_FIELDS = 2**16
 CELERY_IMPORTS = ['notifier.tasks']
 
-RAVEN_CONFIG = {
-    'dsn': SENTRY_DSN,
-    'release': raven.fetch_git_sha(os.path.dirname(os.pardir)),
-}
+#RAVEN_CONFIG = {
+#    'dsn': SENTRY_DSN,
+#    'release': raven.fetch_git_sha(os.path.dirname(os.pardir)),
+#}
