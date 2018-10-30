@@ -47,7 +47,7 @@ class OutletModel(models.Model):
 class StockHistory(models.Model):
     stock_count = models.IntegerField()
     timestamp = models.DateTimeField(auto_now_add=True)
-    model = models.ForeignKey('OutletModel')
+    model = models.ForeignKey('OutletModel', on_delete="cascade")
 
     def __str__(self):
         return "{}: {} @ {}".format(self.model.name, self.stock_count, self.timestamp)
@@ -58,7 +58,7 @@ class NotificationRequest(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     email = models.EmailField(blank=True, null=True)
     mobile_number = models.CharField(max_length=20, null=True, blank=True)
-    model = models.ForeignKey('OutletModel')
+    model = models.ForeignKey('OutletModel', on_delete="cascade")
     sent = models.DateTimeField(blank=True, null=True)
     visited = models.IntegerField(default=0)
 
